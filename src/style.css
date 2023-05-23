@@ -11,6 +11,10 @@ h1 {
     line-height: 1;
 }
 
+p {
+    font-family: -apple-system, system-ui, "Segoe UI", "Liberation Sans", sans-serif;
+}
+
 button {
     background-color: #0095ff;
     border: 1px solid transparent;

@@ -6,7 +6,7 @@
     "icons": {
         "48": "assets/icon.png"
     },
-    "permissions": ["activeTab", "tabs", "scripting"],
+    "permissions": ["activeTab", "tabs", "scripting", "storage"],
     "action": {
         "default_icon": {
             "48": "assets/icon.png"
