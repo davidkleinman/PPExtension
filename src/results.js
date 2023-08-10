@@ -12,10 +12,12 @@ function addElementToPage(title, element) {
 
 chrome.storage.local.get("data").then((result) => {
     const dataArray = result.data;
-    addElementToPage("What types of personal information are collected?", dataArray[0]);
-    addElementToPage("How is personal information collected from users?", dataArray[1]);
-    addElementToPage("What is the purpose for collecting user data?", dataArray[2]);
-    addElementToPage("Is the collected data shared with third parties?", dataArray[3]);
-    addElementToPage("What methods are used for data storage and security?", dataArray[4]);
+    addElementToPage("What personal information is being collected?", dataArray[0]);
+    addElementToPage("Why is my personal information collected?", dataArray[1]);
+    addElementToPage("How is my personal information collected?", dataArray[2]);
+    addElementToPage("Is my personal information shared with third parties?", dataArray[3]);
+    addElementToPage("What security measures are being taken to secure my personal information?", dataArray[4]);
+    addElementToPage("How long is my personal information kept?", dataArray[5]);
+    addElementToPage("Can I delete stored personal information?", dataArray[6]);
     chrome.storage.local.remove("data");
 });
