@@ -1,13 +1,15 @@
 function addElementToPage(title, element) {
-    const titleElement = document.createElement("h2");
-    const titleNode = document.createTextNode(title);
-    titleElement.appendChild(titleNode);
-    document.body.appendChild(titleElement);
+    const newAccordionButton = document.createElement('button');
+    newAccordionButton.className = 'accordion';
+    newAccordionButton.textContent = title;
+    
+    const newPanel = document.createElement('div');
+    newPanel.className = 'panel';
+    newPanel.innerHTML = `<p>${element}</p>`;
+    newPanel.style.display = 'none';
 
-    const dataElement = document.createElement("p");
-    const dataNode = document.createTextNode(element);
-    dataElement.appendChild(dataNode);
-    document.body.appendChild(dataElement);
+    document.body.append(newAccordionButton);
+    document.body.append(newPanel);
 }
 
 chrome.storage.local.get("data").then((result) => {
@@ -19,5 +21,15 @@ chrome.storage.local.get("data").then((result) => {
     addElementToPage("What security measures are being taken to secure my personal information?", dataArray[4]);
     addElementToPage("How long is my personal information kept?", dataArray[5]);
     addElementToPage("Can I delete stored personal information?", dataArray[6]);
+
+    const scriptButton = document.createElement('script')
+    scriptButton.src = 'accordion.js'
+    document.body.append(scriptButton);
+
+    const image = document.createElement('img')
+    image.className = "privacy_policy_image"
+    image.src = '../assets/privacy_policy_hero.svg'
+    document.body.append(image);
+
     chrome.storage.local.remove("data");
 });

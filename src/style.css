@@ -44,7 +44,33 @@ button {
     white-space: nowrap;
 }
 
-button:active {
-    background-color: #0095ff;
-    box-shadow: none;
+.accordion {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 0 18px;
+    width: 100%;
+    text-align: left;
+    border: none;
+    outline: none;
+    transition: 0.4s;
+    font-family: -apple-system, system-ui, "Segoe UI", "Liberation Sans", sans-serif;
+    font-size: large;
+}
+  
+.active, .accordion:hover {
+    background-color: #ccc;
+}
+
+.panel {
+    padding: 0 18px;
+    background-color: white;
+    display: none;
+    overflow: hidden;
+}
+
+.privacy_policy_image {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
