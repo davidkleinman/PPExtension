@@ -2,18 +2,26 @@ const GREEN = "#0ab264";
 const BLUE = "#0095ff";
 const API_URL = "http://localhost:9000/summarize";
 
-async function summarize(url, apiKey, orgId) {
-    return fetch(`${API_URL}?url=${url}&apiKey=${apiKey}&orgId=${orgId}`, {method: "GET"})
-        .then((response) => {
-            if (response.ok) {
-                return response.json();
-            } else if (response.status === 400) {
-                return null;
-            }
-        })
-        .then((data) => {
-            return data ? data["data"] : null;
-        });
+async function summarize(url, apiKey, organizationId) {
+    const requestBody = { url, apiKey, organizationId };
+    return fetch(API_URL, {
+        method: "POST",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestBody),
+    })
+    .then((response) => {
+        if (response.ok) {
+            return response.json();
+        } else if (response.status === 404) {
+            return null;
+        }
+    })
+    .then((data) => {
+        return data ? data["data"] : null;
+    });
 }
 
 async function handleSummarizedPolicy(summarizedPolicy) {
@@ -36,10 +44,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const summarizeButton = document.getElementById("summarizeButton");
     summarizeButton.onclick = () => {
         const apiKey = document.getElementById("apiKey").value;
-        const orgId = document.getElementById("organizationId").value;
+        const organizationId = document.getElementById("organizationId").value;
         summarizeButton.innerText = "Loading...";
         chrome.tabs.query({ active: true, currentWindow: true }, async (tabs) => {
-            summarize(tabs[0].url, apiKey, orgId)
+            summarize(tabs[0].url, apiKey, organizationId)
                 .then((summarizedPolicy) => handleSummarizedPolicy(summarizedPolicy))
                 .catch((error) => {
                     summarizeButton.innerText = "Summarize Policy";
