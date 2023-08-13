@@ -17,6 +17,8 @@ async function summarize(url, apiKey, organizationId) {
             return response.json();
         } else if (response.status === 404) {
             return null;
+        } else {
+            throw new Error("Failed to summarize the given privacy policy")
         }
     })
     .then((data) => {
@@ -24,7 +26,8 @@ async function summarize(url, apiKey, organizationId) {
     });
 }
 
-async function handleSummarizedPolicy(summarizedPolicy) {
+async function handleSummarizedPolicy(summarizedPolicy, loadingInterval) {
+    clearInterval(loadingInterval);
     if (summarizedPolicy !== null) {
         chrome.storage.local.set({ "data": summarizedPolicy });
         summarizeButton.innerText = "View";
@@ -47,11 +50,19 @@ document.addEventListener("DOMContentLoaded", () => {
         const organizationId = document.getElementById("organizationId").value;
         summarizeButton.innerText = "Loading...";
         chrome.tabs.query({ active: true, currentWindow: true }, async (tabs) => {
+            const loadingInterval = setInterval(() => {
+                if (summarizeButton.innerText === "Loading...") {
+                    summarizeButton.innerText = "Loading.";
+                } else {
+                    summarizeButton.innerText += ".";
+                }
+            }, 1000);
             summarize(tabs[0].url, apiKey, organizationId)
-                .then((summarizedPolicy) => handleSummarizedPolicy(summarizedPolicy))
+                .then((summarizedPolicy) => handleSummarizedPolicy(summarizedPolicy, loadingInterval))
                 .catch((error) => {
+                    clearInterval(loadingInterval);
                     summarizeButton.innerText = "Summarize Policy";
-                    alert(`Failed to summarize the given privacy policy - ${error}`);
+                    alert(error);
                 });
         });
     };
