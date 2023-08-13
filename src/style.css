@@ -6,7 +6,7 @@ h1 {
     color: black;
     text-align: center;
     font-family: -apple-system, system-ui, "Segoe UI", "Liberation Sans", sans-serif;
-    font-weight: bold;
+    font-weight: 600;
     letter-spacing: -1px;
     line-height: 1;
 }
@@ -14,6 +14,11 @@ h1 {
 p {
     font-family: -apple-system, system-ui, "Segoe UI", "Liberation Sans", sans-serif;
     font-size: medium;
+}
+
+input {
+    font-family: -apple-system, system-ui, "Segoe UI", "Liberation Sans", sans-serif;
+    margin-bottom: 5px;
 }
 
 button {
@@ -26,12 +31,12 @@ button {
     box-sizing: border-box;
     color: #fff;
     cursor: pointer;
-    display: inline-block;
+    display: block;
     font-family: -apple-system, system-ui, "Segoe UI", "Liberation Sans", sans-serif;
     font-size: 13px;
     font-weight: 400;
     line-height: 1.15385;
-    margin: 0;
+    margin: 0 auto;
     outline: none;
     padding: 0px;
     position: relative;
@@ -40,7 +45,6 @@ button {
     user-select: none;
     -webkit-user-select: none;
     touch-action: manipulation;
-    vertical-align: baseline;
     white-space: nowrap;
 }
 
