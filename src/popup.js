@@ -1,6 +1,6 @@
 const GREEN = "#0ab264";
 const BLUE = "#0095ff";
-const API_URL = "http://localhost:9000/summarize";
+const API_URL = "http://51.16.156.1:5000/summarize";
 
 async function summarize(url, apiKey, organizationId) {
     const requestBody = { url, apiKey, organizationId };
@@ -46,6 +46,7 @@ async function handleSummarizedPolicy(summarizedPolicy, loadingInterval) {
 document.addEventListener("DOMContentLoaded", () => {
     const summarizeButton = document.getElementById("summarizeButton");
     summarizeButton.onclick = () => {
+        summarizeButton.disabled = true;
         const apiKey = document.getElementById("apiKey").value;
         const organizationId = document.getElementById("organizationId").value;
         summarizeButton.innerText = "Loading...";
@@ -58,8 +59,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             }, 1000);
             summarize(tabs[0].url, apiKey, organizationId)
-                .then((summarizedPolicy) => handleSummarizedPolicy(summarizedPolicy, loadingInterval))
+                .then((summarizedPolicy) => {
+                    summarizeButton.disabled = false;
+                    handleSummarizedPolicy(summarizedPolicy, loadingInterval)
+                })
                 .catch((error) => {
+                    summarizeButton.disabled = false;
                     clearInterval(loadingInterval);
                     summarizeButton.innerText = "Summarize Policy";
                     alert(error);
